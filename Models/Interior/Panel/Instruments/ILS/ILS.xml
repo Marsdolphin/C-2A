@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<PropertyList>
+
+  <path>ILS.ac</path>
+
+  <animation>
+    <object-name>RMI.bezel</object-name>
+    <object-name>screw</object-name>
+    <object-name>ILS.face</object-name>
+    <object-name>ILS.face2</object-name>
+    <object-name>Hor.dev</object-name>
+    <object-name>Vert.dev</object-name>
+    <object-name>IndicTOFROM</object-name>
+    <object-name>Flag-GS</object-name>
+    <object-name>Flag-HDG</object-name>
+
+    <object-name>vitre</object-name>
+  </animation>
+
+  <!-- working for Rembrandt -->
+  <effect>
+    <inherits-from>Aircraft/C-2A/Models/Effects/glass/glass</inherits-from>
+    <object-name>vitre</object-name>
+  </effect>
+  
+  <!-- Night Light -->
+  <animation>
+    <type>material</type>
+    <object-name>ILS.face</object-name>
+    <object-name>ILS.face2</object-name>
+    <object-name>Flag-HDG</object-name>
+    <object-name>Flag-GS</object-name>
+    <object-name>Hor.dev</object-name>
+    <object-name>Vert.dev</object-name>
+    <emission>
+      <factor-prop>/systems/electrical/outputs/instrument-lights</factor-prop>
+      <red>   0.50 </red>
+      <green> 0.25 </green>
+      <blue>  0.25 </blue>
+    </emission>
+  </animation>
+  <!-- End night light -->
+
+  <animation>
+    <type>rotate</type>
+    <object-name>ILS.face</object-name>
+    <property>/instrumentation/nav[0]/radials/target-radial-deg</property>
+    <axis>
+      <x> 1 </x>
+      <y> 0 </y>
+      <z> 0 </z>
+    </axis>
+  </animation>
+
+  <animation>
+    <type>select</type>
+    <object-name>Flag-HDG</object-name>
+    <condition>
+      <!-- <and> -->
+        <equals>
+          <property>instrumentation/nav[0]/in-range</property>
+          <value>false</value>
+        </equals>
+      <!-- </and> -->
+    </condition>
+  </animation>
+
+  <animation>
+    <type>select</type>
+    <object-name>Flag-GS</object-name>
+    <condition>
+      <or>
+        <equals>
+          <property>instrumentation/nav[0]/in-range</property>
+          <value>false</value>
+        </equals>
+        <equals>
+          <property>instrumentation/nav[0]/has-gs</property>
+          <value>false</value>
+        </equals>
+      </or>
+    </condition>
+  </animation>
+
+  <animation>
+    <type>translate</type>
+    <object-name>Vert.dev</object-name>
+    <property>instrumentation/nav[0]/gs-needle-deflection</property>
+    <interpolation>
+      <entry><ind> -10 </ind><dep> -0.02 </dep></entry>
+      <entry><ind>   0 </ind><dep>  0.00 </dep></entry>
+      <entry><ind>  10 </ind><dep>  0.02 </dep></entry>
+    </interpolation>
+    <axis>
+      <x> 0 </x>
+      <y> 0 </y>
+      <z> 1 </z>
+    </axis>
+  </animation>
+
+  <animation>
+    <type>translate</type>
+    <object-name>Hor.dev</object-name>
+    <property>instrumentation/nav[0]/heading-needle-deflection</property>
+    <interpolation>
+      <entry><ind> -10 </ind><dep> -0.02 </dep></entry>
+      <entry><ind>   0 </ind><dep>  0.00 </dep></entry>
+      <entry><ind>  10 </ind><dep>  0.02 </dep></entry>
+    </interpolation>
+    <axis>
+      <x> 0 </x>
+      <y> 1 </y>
+      <z> 0 </z>
+    </axis>
+  </animation>
+
+  <animation>
+    <type>rotate</type>
+    <object-name>IndicTOFROM</object-name>
+    <property>/instrumentation/heading-indicator/fromto-pointer</property>
+    <axis>
+      <x> 1 </x>
+      <y> 0 </y>
+      <z> 0 </z>
+    </axis>
+  </animation>
+
+  <!--     Course setting   
+  <animation>
+    <type>pick</type>
+    <object-name>CRS-Decr</object-name>
+    <action>
+      <name>small decrease</name>
+      <button>0</button>
+      <repeatable>true</repeatable>
+      <binding>
+        <command>property-adjust</command>
+        <property>/instrumentation/nav[0]/radials/target-radial-deg</property>
+        <step>-1</step>
+        <min>0</min>
+        <max>360</max>
+        <wrap>1</wrap>
+      </binding>
+    </action>
+    <action>
+      <name>large decrease</name>
+      <button>1</button>
+      <repeatable>true</repeatable>
+      <binding>
+        <command>property-adjust</command>
+        <property>/instrumentation/nav[0]/radials/target-radial-deg</property>
+        <step>-5</step>
+        <min>0</min>
+        <max>360</max>
+        <wrap>1</wrap>
+      </binding>
+    </action>
+  </animation>   
+
+  <animation>
+    <type>pick</type>
+    <object-name>CRS-Incr</object-name>
+    <action>
+      <name>small increase</name>
+      <button>0</button>
+      <repeatable>true</repeatable>
+      <binding>
+        <command>property-adjust</command>
+        <property>/instrumentation/nav[0]/radials/target-radial-deg</property>
+        <step>1</step>
+        <min>0</min>
+        <max>360</max>
+        <wrap>1</wrap>
+      </binding>
+    </action>
+    <action>
+      <name>large increase</name>
+      <button>1</button>
+      <repeatable>true</repeatable>
+      <binding>
+        <command>property-adjust</command>
+        <property>/instrumentation/nav[0]/radials/target-radial-deg</property>
+        <step>5</step>
+        <min>0</min>
+        <max>360</max>
+        <wrap>1</wrap>
+      </binding>
+    </action>
+  </animation>  
+  -->
+
+</PropertyList>
